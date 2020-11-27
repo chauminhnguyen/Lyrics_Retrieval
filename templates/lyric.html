@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+<style>
+    #submit-button {
+        margin: 0 auto;
+        display: block;
+    }
+</style>
+<br>
+<form action="#", method="post">
+    <div class="input-group flex-nowrap">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="addon-wrapping">Input</span>
+        </div>
+        <input type="text" name="inp" class="form-control" placeholder="Keywords" aria-label="Username" aria-describedby="addon-wrapping">
+    </div>
+    <br>
+    <input class="btn btn-primary" type="submit" value="Search Songs" id="submit-button">
+</form>
+<hr>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        {% if results == [None] %}
+            Không có bài hát nào phù hợp với bài hát bạn mong muốn
+        {% else %}
+            <b>{{results[index][0]}}</b>
+            <br>
+            <audio controls>
+                <source src="{{ url_for('static', filename='songs/'+ results[index][0] +'.mp3') }}">
+            </audio>
+            <br>
+            <hr>
+            {% for i in range(0,(results[index][1]|length)-1,2) %}
+                {% autoescape false %}
+                    {{results[index][1][i]}}
+                {% endautoescape %}
+                <b>{{results[index][1][i+1]}}</b>
+            {% endfor %}
+        {% endif %}
+      </div>
+      <div class="col">
+        {% if (results|length) != 1 %}
+            <nav>
+                <ul class="list-group">
+                    {% for result in results %}
+                        {% if result[0] != results[index][0] %}
+                        <a class="btn btn-lg px-3 btn-primary" href={{loop.index0}} role="button">{{result[0]}} <img src="https://lipis.github.io/flag-icon-css/flags/4x3/us.svg" height="30" alt="USA flag"></a>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
