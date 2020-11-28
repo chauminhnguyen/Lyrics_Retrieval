@@ -32,14 +32,14 @@ def createDictionary(directory):
                 if word not in wordsAdded.keys():
                     # if new, creating a new entry for the word in the dictionary
                     wordsAdded[word] = {}
-                    wordsAdded[word]['fileNames'] = []
+                    wordsAdded[word]['songsNames'] = []
                 # adding the file and its path to the dictionary
-                wordsAdded[word]['fileNames'] += [f.name]
+                wordsAdded[word]['songsNames'] += [f.name]
     return wordsAdded
 
 
 def writeToFile(words):
-    with open('index-file.csv', 'w', newline='', encoding='utf-8-sig') as indexFile:
+    with open('./utils/index-file.csv', 'w', newline='', encoding='utf-8-sig') as indexFile:
 
         # declaring the fieldnames for the CSV file
         fieldNames = ['word', 'songsNames']
@@ -53,11 +53,11 @@ def writeToFile(words):
         for word, fileDetails in words.items():
             # creating a string of all the file names and file paths
             fileNameString = reduce(
-                lambda x, y: x + ", " + y, fileDetails['fileNames'])
+                lambda x, y: x + ", " + y, fileDetails['songsNames'])
 
             # writing the row
             csvWriter.writerow(
-                {'word': word, 'fileNames': fileNameString})
+                {'word': word, 'songsNames': fileNameString})
 
 
 def main():

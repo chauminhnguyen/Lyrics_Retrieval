@@ -6,7 +6,7 @@ import re
 def main(query):
     mydict = {}
     # read csv file to get {word : files path}
-    with open('./index-file.csv', 'r', encoding='utf-8') as f:
+    with open('./utils/index-file.csv', 'r', encoding='utf-8') as f:
         csv_reader = csv.reader(f, delimiter=',')
         for row in csv_reader:
             mydict[row[0]] = row[1].split(", ")
@@ -55,9 +55,7 @@ def main(query):
             temp = song_lyric[index_arr[i]:index_arr[i+1]]
             temp = temp.replace('\n', '<br>')
             lyric.append(temp)
-            # print(lyric[-1])
         lyric.append(song_lyric[index_arr[len(index_arr)-1]:])
-        print(lyric)
         result.append(lyric)
         results.append(result)
     return results
