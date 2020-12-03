@@ -5,12 +5,12 @@ import re
 
 def load_data_in_a_directory(data_path):
     file_paths = glob.glob(data_path)
-    lst_contents = []
+    lst_contents = set()
     for file_path in file_paths:
-        words = file_path.split('\\')[-1].split(' - ')[0].replace('"', '').replace(
-            '.', '').replace("'", "").lower().split()
-        #words = set(words)
-        lst_contents.append(words)
+        words = file_path.split(
+            '\\')[-1].split('.')[0].split(' - ')[-1].lower().split('_')
+
+        lst_contents.update(words)
     return (lst_contents, file_paths)
 
 # Doc noi dung cua tung file txt
@@ -20,6 +20,7 @@ def load_data_in_a_directory(data_path):
 def build_dictionary(contents):
     dictionary = set()
     for content in contents:
+        content = content.split()
         dictionary.update(content)
     return dictionary
 
@@ -42,7 +43,7 @@ vocab = build_dictionary(contents)
 # BUOC 2: Xay dung vector TF weighting cho
 # tap van ban va truy van
 TF = calc_tf_weighting(vocab, contents)
-query = "có chắc"
+query = "justin"
 qcontent = query.split()
 qTF = calc_tf_weighting(vocab, [qcontent])
 
@@ -61,6 +62,7 @@ dists = np.linalg.norm(qTF_IDF - TF_IDF, axis=0)
 # BUOC 6: Sap xep de sap hang va hien thi ket qua
 rank = np.argsort(dists)
 topK = 2
+contents = list(contents)
 for i in range(topK):
     print('Van ban gan thu ', i+1, ' la: ',
-          ' '.join(paths[rank[i]].split('\\')[-1].split('.')[0]))
+          ' '.join(contents[rank[i]].split('\\')[-1].split('.')[0]))

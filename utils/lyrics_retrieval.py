@@ -1,6 +1,11 @@
 import string
 import csv
 import re
+import numpy as np
+
+
+def ranking(songs_name):
+    pass
 
 
 def main(query):
@@ -12,13 +17,14 @@ def main(query):
             mydict[row[0]] = row[1].split(", ")
 
     # preprocess query
-    # query = 'anh hát'
-
     # capital words
-    query = query.lower()
+    # query = query.lower()
+    words = set(map(
+                lambda x: x[:-1] if x[-1] in [',', '!', '?', '.'] else x, query.lower().split()))
 
     # stop words
-    words = query.split()
+    # words = query.split()
+
     table = str.maketrans('', '', string.punctuation)
     query = [w.translate(table) for w in words]
 
@@ -34,6 +40,10 @@ def main(query):
         return [None]
 
     songs_name = set.intersection(*postings)
+
+    # rankings
+    ranking(songs_name)
+
     results = []
     # get index of query in found songs
     for song_name in songs_name:

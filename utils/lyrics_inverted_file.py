@@ -48,7 +48,7 @@ def writeToFile(words):
         csvWriter = csv.DictWriter(indexFile, fieldnames=fieldNames)
 
         # writing the header
-        csvWriter.writeheader()
+        # csvWriter.writeheader()
 
         for word, fileDetails in words.items():
             # creating a string of all the file names and file paths
