@@ -42,7 +42,7 @@ vocab = build_dictionary(contents)
 # BUOC 2: Xay dung vector TF weighting cho
 # tap van ban va truy van
 TF = calc_tf_weighting(vocab, contents)
-query = "đừng xin"
+query = "anh nhớ em"
 qcontent = query.split()
 qTF = calc_tf_weighting(vocab, [qcontent])
 

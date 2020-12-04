@@ -85,7 +85,7 @@ def main(query):
     songs_name = set.intersection(*postings)
 
     # rankings
-    mydict.pop('\ufeffroad')
+    mydict.pop('\ufeffin')
     total_docs = os.listdir('./data/lyrics')
     TF_IDF = tf_idf(mydict, total_docs)
     qTF_IDF = qtf_idf(mydict, query)
@@ -97,34 +97,36 @@ def main(query):
         print('Van ban gan thu ', i+1, ' la: ',
               ' '.join(total_docs[rank[i]]))
 
-    # results = []
-    # # get index of query in found songs
-    # for song_name in songs_name:
-    #     result = []
-    #     result.append(song_name.split('/')[-1].split('.')[0])
-    #     index_arr = [0]
-    #     lyric = []
-    #     with open(song_name, 'r', encoding='utf-8') as f:
-    #         song_lyric = f.read()
-    #         for word in query:
-    #             indexes = re.finditer("\\b(?i)" + word + "\\b", song_lyric)
-    #             for index in indexes:
-    #                 # print(index.start(0), index.end(0))
-    #                 index_arr.append(index.start(0))
-    #                 index_arr.append(index.end(0))
-    #     index_arr.append(len(song_lyric))
-    #     index_arr = sorted(index_arr)
-    #     for i in range(len(index_arr)-1):
-    #         temp = song_lyric[index_arr[i]:index_arr[i+1]]
-    #         temp = temp.replace('\n', '<br>')
-    #         lyric.append(temp)
-    #     lyric.append(song_lyric[index_arr[len(index_arr)-1]:])
-    #     result.append(lyric)
-    #     results.append(result)
-    # return results
+
+main('anh nhớ em')
+# results = []
+# # get index of query in found songs
+# for song_name in songs_name:
+#     result = []
+#     result.append(song_name.split('/')[-1].split('.')[0])
+#     index_arr = [0]
+#     lyric = []
+#     with open(song_name, 'r', encoding='utf-8') as f:
+#         song_lyric = f.read()
+#         for word in query:
+#             indexes = re.finditer("\\b(?i)" + word + "\\b", song_lyric)
+#             for index in indexes:
+#                 # print(index.start(0), index.end(0))
+#                 index_arr.append(index.start(0))
+#                 index_arr.append(index.end(0))
+#     index_arr.append(len(song_lyric))
+#     index_arr = sorted(index_arr)
+#     for i in range(len(index_arr)-1):
+#         temp = song_lyric[index_arr[i]:index_arr[i+1]]
+#         temp = temp.replace('\n', '<br>')
+#         lyric.append(temp)
+#     lyric.append(song_lyric[index_arr[len(index_arr)-1]:])
+#     result.append(lyric)
+#     results.append(result)
+# return results
 
 
-main("Galway")
+# main("Galway")
 # Van ban gan thu  1  la:  G a l w a y   G i r l   -   E d   S h e e r a n . t x t
 # Van ban gan thu  2  la:  B à i   N à y   C h i l l   P h ế t   -   Đ e n _ M I N . t x t
 # Van ban gan thu  3  la:  Â m   T h ầ m   B ê n   E m   -   S ơ n   T ù n g   M - T P . t x t
@@ -136,7 +138,7 @@ main("Galway")
 # Van ban gan thu  9  la:  V ẫ n   N h ớ   -   T u ấ n   H ư n g . t x t
 # Van ban gan thu  10  la:  N ơ i   N à y   C ó   A n h   -   S ơ n   T ù n g   M - T P . t x t
 
-main("Hallelujah")
+# main("Hallelujah")
 # Van ban gan thu  1  la:  S u p e r m a r k e t   F l o w e r s   -   E d   S h e e r a n . t x t
 # Van ban gan thu  2  la:  B à i   N à y   C h i l l   P h ế t   -   Đ e n _ M I N . t x t
 # Van ban gan thu  3  la:  Â m   T h ầ m   B ê n   E m   -   S ơ n   T ù n g   M - T P . t x t
