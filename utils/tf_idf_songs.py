@@ -35,32 +35,28 @@ def calc_tf_weighting(vocab, contents):
 # MAIN
 
 
-# BUOC 1: Load cac file trong 'data' va xay dụng tap cac tu vung
-contents, paths = load_data_in_a_directory('./data/lyrics/*.txt')
-vocab = build_dictionary(contents)
+def main(query):
+    contents, paths = load_data_in_a_directory('./data/lyrics/*.txt')
+    vocab = build_dictionary(contents)
 
-# BUOC 2: Xay dung vector TF weighting cho
-# tap van ban va truy van
-TF = calc_tf_weighting(vocab, contents)
-query = "anh nhớ em"
-qcontent = query.split()
-qTF = calc_tf_weighting(vocab, [qcontent])
+    TF = calc_tf_weighting(vocab, contents)
+    qcontent = query.split()
+    qTF = calc_tf_weighting(vocab, [qcontent])
 
-# BUOC 3: Xay dung vector IDF weight cho tap van ban
-DF = np.sum(TF != 0, axis=1)
-IDF = 1 + np.log(len(contents) / DF)
-IDF = np.array([IDF]).T
-# BUOC 4: Xay dung vector TF_IDF weighting cho
-# tap van ban va truy van
-TF_IDF = TF*IDF
-qTF_IDF = qTF*IDF
+    DF = np.sum(TF != 0, axis=1)
+    IDF = 1 + np.log(len(contents) / DF)
+    IDF = np.array([IDF]).T
 
-# BUOC 5: Tinh do tuong dong cua query va cac van ban
-# su dung TF_IDF weighting
-dists = np.linalg.norm(qTF_IDF - TF_IDF, axis=0)
-# BUOC 6: Sap xep de sap hang va hien thi ket qua
-rank = np.argsort(dists)
-topK = 2
-for i in range(topK):
-    print('Van ban gan thu ', i+1, ' la: ',
-          ' '.join(paths[rank[i]].split('\\')[-1].split('.')[0]))
+    TF_IDF = TF*IDF
+    qTF_IDF = qTF*IDF
+
+    dists = np.linalg.norm(qTF_IDF - TF_IDF, axis=0)
+    rank = np.argsort(dists)
+    topK = 2
+    res = []
+    for i in range(topK):
+        res.append(paths[rank[i]].split('\\')[-1].split('.')[0])
+    return res
+
+
+print(main('anh nhớ em'))
