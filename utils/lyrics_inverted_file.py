@@ -53,7 +53,7 @@ def writeToFile(words):
         for word, fileDetails in words.items():
             # creating a string of all the file names and file paths
             fileNameString = reduce(
-                lambda x, y: x + ", " + y, fileDetails['songsNames'])
+                lambda x, y: x + " _ " + y, fileDetails['songsNames'])
 
             # writing the row
             csvWriter.writerow(
