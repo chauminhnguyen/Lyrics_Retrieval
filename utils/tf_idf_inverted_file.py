@@ -17,19 +17,22 @@ table = str.maketrans('', '', string.punctuation)
 def tf_idf(mydict, total_docs):
     terms = mydict.keys()
     TF = np.zeros((len(terms), len(total_docs)))
-    IDF = []
+    DF = []
     for i, term in enumerate(terms):
         for doc in mydict[term]:
             song_name = doc.split('/')[-1]
             j = total_docs.index(song_name)
-            doc = open(doc, 'r', encoding='utf-8').read()
+            content = open(doc, 'r', encoding='utf-8').read()
 
             words = list(map(
-                lambda x: x[:-1] if x[-1] in [',', '!', '?', '.'] else x, doc.lower().split()))
-            doc = [w.translate(table) for w in words]
-            TF[i, j] = doc.count(term)
-        IDF.append(idf(mydict[term], total_docs))
+                lambda x: x[:-1] if x[-1] in [',', '!', '?', '.'] else x, content.lower().split()))
+            content = [w.translate(table) for w in words]
+            TF[i, j] = content.count(term)
+        DF.append(len(mydict[term]))
 
+    TF = np.array(TF[1:])
+    DF = np.array(DF[1:])
+    IDF = 1 + np.log(len(total_docs) / DF)
     IDF = np.array([IDF]).T
     TF = TF / np.sum(TF, axis=0)
     return TF * IDF

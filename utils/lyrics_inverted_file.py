@@ -20,8 +20,11 @@ def createDictionary(directory):
             # getting all the words in the file in lowercase
             # also, getting rid of any trailing punctuation
             # removing repetitions of a word in the file
+
             words = set(map(
                 lambda x: x[:-1] if x[-1] in [',', '!', '?', '.'] else x, f.read().lower().split()))
+            # words = f.read().replace('"', '').replace(
+            #     '.', '').replace("'", "").split()
 
             table = str.maketrans('', '', string.punctuation)
             for word in words:

@@ -8,6 +8,8 @@ import numpy as np
 import os
 import time
 import pickle
+from scipy.spatial import distance
+
 
 table = str.maketrans('', '', string.punctuation)
 
@@ -44,7 +46,7 @@ def linked(query, songs_names):
                         break
             if plinked_points > temp:
                 variance += 1
-        linked_points.append(plinked_points * variance)
+        linked_points.append(plinked_points * variance * variance)
     return linked_points
 
 
@@ -54,6 +56,7 @@ def qtf_idf(mydict, query):
     for i, term in enumerate(terms):
         # for j, word in enumerate(query):
         TF[i] = query.count(term)
+    TF = TF[1:]
     IDF = idf(mydict[term], query)
     TF = TF / np.sum(TF, axis=0)
     return TF * IDF
@@ -68,27 +71,23 @@ def main(query):
             mydict[row[0]] = row[1].split(" _ ")
 
     # preprocess query
-    # capital words
-    # query = query.lower()
     words = list(map(
         lambda x: x[:-1] if x[-1] in [',', '!', '?', '.'] else x, query.lower().split()))
 
-    # stop words
-    # words = query.split()
-
-    table = str.maketrans('', '', string.punctuation)
     query = [w.translate(table) for w in words]
-
-    # rankings
-    # mydict.pop('\ufeffin')
     total_docs = os.listdir('./data/lyrics')
     pk = open('tf_idf.pk', 'rb')
     TF_IDF = pickle.load(pk)
     qTF_IDF = qtf_idf(mydict, query)
 
+    # TF_IDF = TF_IDF.T
+    # dists = []
+    # for ele in TF_IDF:
+    #     dists.append(distance.cosine(qTF_IDF, ele))
+    # dists = np.array(dists)
     dists = np.linalg.norm(qTF_IDF - TF_IDF, axis=0)
     rank = np.argsort(dists)
-    topK = 1024
+    topK = 500
     res = []
     for i in range(topK):
         res.append(total_docs[rank[i]])
@@ -103,7 +102,7 @@ def main(query):
 
 
 start = time.time()
-query = "Tình yêu từng đánh đổi"
+query = "Constricted my grasp"
 qlst = query.split()
 songs = main(query)
 
@@ -115,10 +114,3 @@ for song in songs:
             count += l.count(q)
     print(song, str(count))
 print(time.time() - start)
-
-# count = 0
-# with open('./data/lyrics/Swimming In The Stars - Britney Spears.txt', 'r', encoding='utf-8') as f:
-#     l = f.read()
-#     for q in qlst:
-#         count += l.count(q)
-# print(str(count))
