@@ -29,7 +29,7 @@ def linked(query, songs_names):
 
     for song_name in songs_names:
         variance = 1
-        plinked_points = 0
+        plinked_points = 1
         content = open('./data/lyrics/' + song_name,
                        'r', encoding='utf-8').read()
         content = content.translate(table)
@@ -85,9 +85,10 @@ def main(query):
     # for ele in TF_IDF:
     #     dists.append(distance.cosine(qTF_IDF, ele))
     # dists = np.array(dists)
+
     dists = np.linalg.norm(qTF_IDF - TF_IDF, axis=0)
     rank = np.argsort(dists)
-    topK = 500
+    topK = 400
     res = []
     for i in range(topK):
         res.append(total_docs[rank[i]])
@@ -102,7 +103,7 @@ def main(query):
 
 
 start = time.time()
-query = "Constricted my grasp"
+query = "Tình yêu từng đánh đổi"
 qlst = query.split()
 songs = main(query)
 

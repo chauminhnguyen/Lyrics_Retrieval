@@ -1,1 +1,1 @@
-mydict
+Người bội bạc bỏ ta

@@ -48,6 +48,9 @@ def main():
 
     total_docs = os.listdir('./data/lyrics')
     TF_IDF = tf_idf(mydict, total_docs)
+    where_are_NaNs = np.isnan(TF_IDF)
+    TF_IDF[where_are_NaNs] = 0
+
     pickle.dump(TF_IDF, open('tf_idf.pk', 'wb'))
     pk = open('tf_idf.pk', 'rb')
     data = pickle.load(pk)
