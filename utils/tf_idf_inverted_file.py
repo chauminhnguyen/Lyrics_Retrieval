@@ -5,7 +5,6 @@ import numpy as np
 import os
 import pickle
 
-
 def idf(docs, total_docs):
     DF = len(docs)
     return 1 + np.log(len(total_docs) / DF)
