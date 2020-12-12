@@ -9,7 +9,6 @@ import time
 # TODO - decrease for loops used somehow
 # TODO - try applying map and reduce
 
-
 def createDictionary(directory):
     wordsAdded = {}
     # getting the files in the directory
